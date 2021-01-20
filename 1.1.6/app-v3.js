@@ -6,13 +6,13 @@
  * Do NOT use SRI with dynamically generated files! More information: https://www.jsdelivr.com/using-sri-with-dynamic-files
  */
 // 在head 中 加载 必要静态
-document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/smallwindtest/sw/1.1.3/css/mdui_v2.min.css">');
-document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/smallwindtest/sw/1.1.6/css/nexmoe_v2.min.css">');
-document.write('<script src="//cdn.jsdelivr.net/gh/smallwindtest/sw/1.1.3/js/mdui.min.js"></script>');
-document.write('<script src="//cdn.jsdelivr.net/gh/smallwindtest/sw/1.1.5/js/flv.min.js"></script>');
-document.write('<script src="//cdn.jsdelivr.net/gh/smallwindtest/sw/1.1.5/js/DPlayer.min.js"></script>');
+document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/5MayRain/goIndex-theme-nexmoe@1.1.3/css/mdui_v2.min.css">');
+document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/5MayRain/goIndex-theme-nexmoe@1.1.6/css/nexmoe_v2.min.css">');
+document.write('<script src="//cdn.jsdelivr.net/gh/5MayRain/goIndex-theme-nexmoe@1.1.3/js/mdui.min.js"></script>');
+document.write('<script src="//cdn.jsdelivr.net/gh/5MayRain/goIndex-theme-nexmoe@1.1.5/js/flv.min.js"></script>');
+document.write('<script src="//cdn.jsdelivr.net/gh/5MayRain/goIndex-theme-nexmoe@1.1.5/js/DPlayer.min.js"></script>');
 // markdown支持
-document.write('<script src="//cdn.jsdelivr.net/gh/smallwindtest/sw/1.1.3/js/markdown-it.min.js"></script>');
+document.write('<script src="//cdn.jsdelivr.net/gh/5MayRain/goIndex-theme-nexmoe@1.1.3/js/markdown-it.min.js"></script>');
 document.write('<style>.mdui-appbar .mdui-toolbar{height:56px;font-size:1pc}.mdui-toolbar>i{opacity:.5}.mdui-toolbar>i{padding:0}.mdui-toolbar>a:hover,a.active,a.mdui-typo-headline{opacity:1}.mdui-container{max-width:980px}.mdui-list-item{transition:none}.mdui-list>.th{background-color:initial}.mdui-list-item>a{width:100%;line-height:3pc}.mdui-list-item{margin:2px 0;padding:0}.mdui-toolbar>a:last-child{opacity:1}@media screen and (max-width:980px){.mdui-list-item .mdui-text-right{display:none}.mdui-container{width:100%!important;margin:0}}</style>');
 // add custome theme and darkmode
 if (UI.dark_mode) {
@@ -26,10 +26,11 @@ function init() {
   var html = `
 <header class="nexmoe-nav">
 	<div class="navSize">
-			<a href="/"><img class="avatar" src="https://cdn.jsdelivr.net/gh/smallwindtest/sw/Neko.jpg"/></a>
+			<a href="/"><img class="avatar" src="https://i.loli.net/2020/04/24/wCxMZFtiv6aKmQ1.png"/></a>
 			<div class="nav_menu">
 				<ul class="menu_ul">
-					<li class="menu_li"><a href="https://discord.gg/gTKTgzZQef" target="_blank">DISCORD</a></li>
+					<li class="menu_li"><a href="https://5mayrain.github.io/" target="_blank">博客</a></li>
+					<li class="menu_li"><a href="https://drive.google.com/" target="_blank">登陆</a></li>
 				</ul>
 				<div class="nav_icon" ></div>
 			</div>
@@ -228,15 +229,15 @@ function list(path) {
 	  <ul class="mdui-list"> 
 	   <li class="mdui-list-item th"> 
 	    <div class="mdui-col-xs-12 mdui-col-sm-7">
-	     檔案名稱
+	     文件
 	<i class="mdui-icon material-icons icon-sort" data-sort="name" data-order="more">expand_more</i>
 	    </div> 
 	    <div class="mdui-col-sm-3 mdui-text-right">
-	     修改時間
+	     修改时间
 	<i class="mdui-icon material-icons icon-sort" data-sort="date" data-order="downward">expand_more</i>
 	    </div> 
 	    <div class="mdui-col-sm-2 mdui-text-right">
-	     檔案大小
+	     大小
 	<i class="mdui-icon material-icons icon-sort" data-sort="size" data-order="downward">expand_more</i>
 	    </div> 
 	    </li> 
@@ -245,7 +246,7 @@ function list(path) {
 	 <div class="mdui-row"> 
 	  <ul id="list" class="mdui-list"> 
 	  </ul> 
-	  <div id="count" class="mdui-hidden mdui-center mdui-text-center mdui-m-b-3 mdui-typo-subheading mdui-text-color-blue-grey-500">共 <span class="number"></span> 項</div>
+	  <div id="count" class="mdui-hidden mdui-center mdui-text-center mdui-m-b-3 mdui-typo-subheading mdui-text-color-blue-grey-500">共 <span class="number"></span> 项</div>
 	 </div>
 	`;
   $('#content').html(content);
@@ -743,8 +744,8 @@ function file_code(path) {
 </div>
 <a href="${href}" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
 
-<script src="//cdn.jsdelivr.net/gh/smallwindtest/sw/js/ace.js"></script>
-<script src="//cdn.jsdelivr.net/gh/smallwindtest/sw/js/ext-language_tools.js"></script>
+<script src="//cdn.jsdelivr.net/gh/5MayRain/goIndex-theme-nexmoe/js/ace.js"></script>
+<script src="//cdn.jsdelivr.net/gh/5MayRain/goIndex-theme-nexmoe/js/ext-language_tools.js"></script>
 	`;
   $('#content').html(content);
 
@@ -1010,12 +1011,12 @@ function utc2beijing(utc_datetime) {
 
 // bytes自适应转换到KB,MB,GB
 function formatFileSize(bytes) {
-  if (bytes >= 1073741824) {
-    bytes = (bytes / 1073741824).toFixed(2) + ' GB';
-  } else if (bytes >= 1048576) {
-    bytes = (bytes / 1048576).toFixed(2) + ' MB';
-  } else if (bytes >= 1024) {
-    bytes = (bytes / 1024).toFixed(2) + ' KB';
+  if (bytes >= 1000000000) {
+    bytes = (bytes / 1000000000).toFixed(2) + ' GB';
+  } else if (bytes >= 1000000) {
+    bytes = (bytes / 1000000).toFixed(2) + ' MB';
+  } else if (bytes >= 1000) {
+    bytes = (bytes / 1000).toFixed(2) + ' KB';
   } else if (bytes > 1) {
     bytes = bytes + ' bytes';
   } else if (bytes == 1) {
