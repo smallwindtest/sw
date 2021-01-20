@@ -337,7 +337,7 @@ function list(path) {
     successResultCallback,
     function (path) {
       $('#spinner').remove();
-      var pass = prompt("目录加密, 请输入密码", "");
+      var pass = prompt("目錄加密, 請輸入密碼", "");
       localStorage.setItem('password' + path, pass);
       if (pass != null && pass != "") {
         list(path);
@@ -395,7 +395,7 @@ function append_files_to_list(path, files) {
         });
       }
       var ext = p.split('.').pop().toLowerCase();
-      if ("|html|php|css|go|java|js|json|txt|sh|md|mp4|webm|avi|bmp|jpg|jpeg|png|gif|m4a|mp3|flac|wav|ogg|mpg|mpeg|mkv|rm|rmvb|mov|wmv|asf|ts|flv|pdf|".indexOf(`|${ext}|`) >= 0) {
+      if ("|c8763|".indexOf(`|${ext}|`) >= 0) {
         targetFiles.push(filepath);
         p += "?a=view";
         c += " view";
@@ -467,15 +467,15 @@ function render_search_result_list() {
 	  <ul class="mdui-list"> 
 	   <li class="mdui-list-item th"> 
 	    <div class="mdui-col-xs-12 mdui-col-sm-7">
-	     文件
+	     名稱
 	<i class="mdui-icon material-icons icon-sort" data-sort="name" data-order="more">expand_more</i>
 	    </div> 
 	    <div class="mdui-col-sm-3 mdui-text-right">
-	     修改时间
+	     修改時間
 	<i class="mdui-icon material-icons icon-sort" data-sort="date" data-order="downward">expand_more</i>
 	    </div> 
 	    <div class="mdui-col-sm-2 mdui-text-right">
-	     大小
+	     檔案大小
 	<i class="mdui-icon material-icons icon-sort" data-sort="size" data-order="downward">expand_more</i>
 	    </div> 
 	    </li> 
@@ -484,7 +484,7 @@ function render_search_result_list() {
 	 <div class="mdui-row"> 
 	  <ul id="list" class="mdui-list"> 
 	  </ul> 
-	  <div id="count" class="mdui-hidden mdui-center mdui-text-center mdui-m-b-3 mdui-typo-subheading mdui-text-color-blue-grey-500">共 <span class="number"></span> 项</div>
+	  <div id="count" class="mdui-hidden mdui-center mdui-text-center mdui-m-b-3 mdui-typo-subheading mdui-text-color-blue-grey-500">共 <span class="number"></span> 項</div>
 	 </div>
 	 <div id="readme_md" class="mdui-typo" style="display:none; padding: 20px 0;"></div>
 	`;
@@ -633,7 +633,7 @@ function onSearchResultItemClick(a_ele) {
   var cur = window.current_drive_order;
   var dialog = mdui.dialog({
     title: '',
-    content: '<div class="mdui-text-center mdui-typo-title mdui-m-b-1">正在获取目标路径...</div><div class="mdui-spinner mdui-spinner-colorful mdui-center"></div>',
+    content: '<div class="mdui-text-center mdui-typo-title mdui-m-b-1">正在讀取目標路徑...</div><div class="mdui-spinner mdui-spinner-colorful mdui-center"></div>',
     // content: '<div class="mdui-spinner mdui-spinner-colorful mdui-center"></div>',
     history: false,
     modal: true,
@@ -647,18 +647,18 @@ function onSearchResultItemClick(a_ele) {
       dialog.close();
       var href = `/${cur}:${data}${can_preview ? '?a=view' : ''}`;
       dialog = mdui.dialog({
-        title: '<i class="mdui-icon material-icons">&#xe815;</i>目标路径',
+        title: '<i class="mdui-icon material-icons">&#xe815;</i>目標路徑',
         content: `<a href="${href}">${data}</a>`,
         history: false,
         modal: true,
         closeOnEsc: true,
         buttons: [
           {
-            text: '打开', onClick: function () {
+            text: '打開', onClick: function () {
               window.location.href = href
             }
           }, {
-            text: '新标签中打开', onClick: function () {
+            text: '新頁籤中打開', onClick: function () {
               window.open(href)
             }
           }
@@ -669,8 +669,8 @@ function onSearchResultItemClick(a_ele) {
     }
     dialog.close();
     dialog = mdui.dialog({
-      title: '<i class="mdui-icon material-icons">&#xe811;</i>获取目标路径失败',
-      content: 'o(╯□╰)o 可能是因为该盘中并不存在此项！也可能因为没有把【与我共享】的文件添加到个人云端硬盘中！',
+      title: '<i class="mdui-icon material-icons">&#xe811;</i>無法讀取或找不到目標',
+      content: '可能因為硬碟中並不存在此項！',
       history: false,
       modal: true,
       closeOnEsc: true,
@@ -692,294 +692,6 @@ function get_file(path, file, callback) {
       callback(d);
     });
   }
-}
-
-
-// 文件展示 ?a=view
-function file(path) {
-  var name = path.split('/').pop();
-  var ext = name.split('.').pop().toLowerCase().replace(`?a=view`, "").toLowerCase();
-  if ("|html|php|css|go|java|js|json|txt|sh|md|".indexOf(`|${ext}|`) >= 0) {
-    return file_code(path);
-  }
-
-  if ("|mp4|webm|avi|".indexOf(`|${ext}|`) >= 0) {
-    return file_video(path);
-  }
-
-  if ("|mpg|mpeg|mkv|rm|rmvb|mov|wmv|asf|ts|flv|".indexOf(`|${ext}|`) >= 0) {
-    return file_video(path);
-  }
-
-  if ("|mp3|flac|wav|ogg|m4a|".indexOf(`|${ext}|`) >= 0) {
-    return file_audio(path);
-  }
-
-  if ("|bmp|jpg|jpeg|png|gif|".indexOf(`|${ext}|`) >= 0) {
-    return file_image(path);
-  }
-
-  if ('pdf' === ext) return file_pdf(path);
-}
-
-// 文件展示 |html|php|css|go|java|js|json|txt|sh|md|
-function file_code(path) {
-  var type = {
-    "html": "html",
-    "php": "php",
-    "css": "css",
-    "go": "golang",
-    "java": "java",
-    "js": "javascript",
-    "json": "json",
-    "txt": "Text",
-    "sh": "sh",
-    "md": "Markdown",
-  };
-  var name = path.split('/').pop();
-  var ext = name.split('.').pop().toLowerCase();
-  var href = window.location.origin + path;
-  var content = `
-<div class="mdui-container">
-<pre id="editor" ></pre>
-</div>
-<div class="mdui-textfield">
-	<label class="mdui-textfield-label">下载地址</label>
-	<input class="mdui-textfield-input" type="text" value="${href}"/>
-</div>
-<a href="${href}" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
-
-<script src="//cdn.jsdelivr.net/gh/smallwindtest/sw/js/ace.js"></script>
-<script src="//cdn.jsdelivr.net/gh/smallwindtest/sw/js/ext-language_tools.js"></script>
-	`;
-  $('#content').html(content);
-
-  $.get(path, function (data) {
-    $('#editor').html($('<div/>').text(data).html());
-    var code_type = "Text";
-    if (type[ext] != undefined) {
-      code_type = type[ext];
-    }
-    var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/ambiance");
-    editor.setFontSize(18);
-    editor.session.setMode("ace/mode/" + code_type);
-
-    //Autocompletion
-    editor.setOptions({
-      enableBasicAutocompletion: true,
-      enableSnippets: true,
-      enableLiveAutocompletion: true,
-      maxLines: Infinity
-    });
-  });
-}
-
-function copyToClipboard(str) {
-  const $temp = $("<input>");
-  $("body").append($temp);
-  $temp.val(str).select();
-  document.execCommand("copy");
-  $temp.remove();
-}
-
-// 文件展示 视频 |mp4|webm|avi|
-function file_video(path) {
-  const url = window.location.origin + path;
-  let player_items = [
-    {
-      text: 'MXPlayer(Free)',
-      href: `intent:${url}#Intent;package=com.mxtech.videoplayer.ad;S.title=${path};end`,
-    },
-    {
-      text: 'MXPlayer(Pro)',
-      href: `intent:${url}#Intent;package=com.mxtech.videoplayer.pro;S.title=${path};end`,
-    },
-    {
-      text: 'nPlayer',
-      href: `nplayer-${url}`,
-    },
-    {
-      text: 'VLC',
-      href: `vlc://${url}`,
-    },
-    {
-      text: 'PotPlayer',
-      href: `potplayer://${url}`
-    }
-  ]
-    .map(it => `<li class="mdui-menu-item"><a href="${it.href}" class="mdui-ripple">${it.text}</a></li>`)
-    .join('');
-  player_items += `<li class="mdui-divider"></li>
-                   <li class="mdui-menu-item"><a id="copy-link" class="mdui-ripple">复制链接</a></li>`;
-  const playBtn = `
-      <button class="mdui-btn mdui-ripple mdui-color-theme-accent" mdui-menu="{target:'#player-items'}">
-        <i class="mdui-icon material-icons">&#xe039;</i>外部播放器播放<i class="mdui-icon material-icons">&#xe5cf;</i>
-      </button>
-      <ul class="mdui-menu" id="player-items">${player_items}</ul>`;
-
-  const content = `
-<div class="mdui-container-fluid">
-	<br>
-	<div class="mdui-video-fluid mdui-center" id="dplayer"></div>
-	<br>${playBtn}
-	<!-- 固定标签 -->
-	<div class="mdui-textfield">
-	  <label class="mdui-textfield-label">下载地址</label>
-	  <input class="mdui-textfield-input" type="text" value="${url}"/>
-	</div>
-	<div class="mdui-textfield">
-	  <label class="mdui-textfield-label">HTML 引用地址</label>
-	  <textarea class="mdui-textfield-input"><video><source src="${url}" type="video/mp4"></video></textarea>
-	</div>
-</div>
-<a href="${url}" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
-	`;
-  $('#content').html(content);
-  $('#copy-link').on('click', () => {
-    copyToClipboard(url);
-    mdui.snackbar('已复制到剪切板!');
-  });
-
-const dp = new DPlayer({
-    container: document.getElementById("dplayer"),
-    loop: true,
-    lang: 'zh-cn',
-    screenshot: true,
-    preload: 'auto',
-    video: {
-      quality: [
-        {
-          url: url,
-          type: "normal"
-        }
-      ],
-      autoplay: true,
-      defaultQuality: 0
-    }
-  });
-}
-
-// 文件展示 音频 |mp3|flac|m4a|wav|ogg|
-function file_audio(path) {
-  var url = window.location.origin + path;
-  var content = `
-<div class="mdui-container-fluid">
-	<br>
-	<audio class="mdui-center" preload controls>
-	  <source src="${url}"">
-	</audio>
-	<br>
-	<!-- 固定标签 -->
-	<div class="mdui-textfield">
-	  <label class="mdui-textfield-label">下载地址</label>
-	  <input class="mdui-textfield-input" type="text" value="${url}"/>
-	</div>
-	<div class="mdui-textfield">
-	  <label class="mdui-textfield-label">HTML 引用地址</label>
-	  <textarea class="mdui-textfield-input"><audio><source src="${url}"></audio></textarea>
-	</div>
-</div>
-<a href="${url}" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
-	`;
-  $('#content').html(content);
-}
-
-// 文件展示 pdf  pdf
-function file_pdf(path) {
-  const url = window.location.origin + path;
-  const inline_url = `${url}?inline=true`
-  const file_name = decodeURI(path.slice(path.lastIndexOf('/') + 1, path.length))
-  var content = `
-	<object data="${inline_url}" type="application/pdf" name="${file_name}" style="width:100%;height:94vh;"><embed src="${inline_url}" type="application/pdf"/></object>
-    <a href="${url}" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
-	`;
-  $('#content').removeClass('mdui-container').addClass('mdui-container-fluid').css({padding: 0}).html(content);
-}
-
-// 图片展示
-function file_image(path) {
-  var url = window.location.origin + path;
-  // console.log(window.location.pathname)
-  const currentPathname = window.location.pathname
-  const lastIndex = currentPathname.lastIndexOf('/');
-  const fatherPathname = currentPathname.slice(0, lastIndex + 1);
-  // console.log(fatherPathname)
-  let target_children = localStorage.getItem(fatherPathname);
-  // console.log(`fatherPathname: ${fatherPathname}`);
-  // console.log(target_children)
-  let targetText = '';
-  if (target_children) {
-    try {
-      target_children = JSON.parse(target_children);
-      if (!Array.isArray(target_children)) {
-        target_children = []
-      }
-    } catch (e) {
-      console.error(e);
-      target_children = [];
-    }
-    if (target_children.length > 0 && target_children.includes(path)) {
-      let len = target_children.length;
-      let cur = target_children.indexOf(path);
-      // console.log(`len = ${len}`)
-      // console.log(`cur = ${cur}`)
-      let prev_child = (cur - 1 > -1) ? target_children[cur - 1] : null;
-      let next_child = (cur + 1 < len) ? target_children[cur + 1] : null;
-      targetText = `
-            <div class="mdui-container">
-                <div class="mdui-row-xs-2 mdui-m-b-1">
-                    <div class="mdui-col">
-                        ${prev_child ? `<button id="leftBtn" data-filepath="${prev_child}" class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple">上一张</button>` : `<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple" disabled>上一张</button>`}
-                    </div>
-                    <div class="mdui-col">
-                        ${next_child ? `<button id="rightBtn"  data-filepath="${next_child}" class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple">下一张</button>` : `<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple" disabled>下一张</button>`}
-                    </div> 
-                </div>
-            </div>
-            `;
-    }
-    // <div id="btns" >
-    //             ${targetObj[path].prev ? `<span id="leftBtn" data-direction="left" data-filepath="${targetObj[path].prev}"><i class="mdui-icon material-icons">&#xe5c4;</i><span style="margin-left: 10px;">Prev</span></span>` : `<span style="cursor: not-allowed;color: rgba(0,0,0,0.2);margin-bottom:20px;"><i class="mdui-icon material-icons">&#xe5c4;</i><span style="margin-left: 10px;">Prev</span></span>`}
-    //             ${targetObj[path].next ? `<span id="rightBtn" data-direction="right"  data-filepath="${targetObj[path].next}"><i class="mdui-icon material-icons">&#xe5c8;</i><span style="margin-left: 10px;">Next</span></span>` : `<span style="cursor: not-allowed;color: rgba(0,0,0,0.2);"><i class="mdui-icon material-icons">&#xe5c4;</i><span style="margin-left: 10px;">Prev</span></span>`}
-    // </div>
-  }
-  var content = `
-<div class="mdui-container-fluid">
-    <br>
-    <div id="imgWrap">
-        ${targetText}
-	    <img class="mdui-img-fluid" src="${url}"/>
-    </div>
-	<br>
-	<div class="mdui-textfield">
-	  <label class="mdui-textfield-label">下载地址</label>
-	  <input class="mdui-textfield-input" type="text" value="${url}"/>
-	</div>
-	<div class="mdui-textfield">
-	  <label class="mdui-textfield-label">HTML 引用地址</label>
-	  <input class="mdui-textfield-input" type="text" value="<img src='${url}' />"/>
-	</div>
-        <div class="mdui-textfield">
-	  <label class="mdui-textfield-label">Markdown 引用地址</label>
-	  <input class="mdui-textfield-input" type="text" value="![](${url})"/>
-	</div>
-        <br>
-</div>
-<a href="${url}" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
-    `;
-  //my code
-  $('#content').html(content);
-  $('#leftBtn, #rightBtn').click((e) => {
-    let target = $(e.target);
-    if (['I', 'SPAN'].includes(e.target.nodeName)) {
-      target = $(e.target).parent();
-    }
-    const filepath = target.attr('data-filepath');
-    const direction = target.attr('data-direction');
-    //console.log(`${direction}翻页 ${filepath}`);
-    file(filepath)
-  });
 }
 
 
